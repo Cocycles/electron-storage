@@ -1,0 +1,33 @@
+{
+  "name": "electron-storage",
+  "version": "1.0.0",
+  "description": "module for managing storage in electron applications",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "electron-mocha --recursive tests -R spec && electron-mocha --renderer --recursive tests -R spec",
+    "lint": "eslint ./src/**/*.js; exit 0"
+  },
+  "keywords": [
+    "electron",
+    "storage",
+    "json",
+    "get",
+    "set",
+    "isPathExists"
+  ],
+  "author": "Ran yitzhaki",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "electron-mocha": "^2.2.1",
+    "electron-prebuilt": "^1.2.5",
+    "eslint": "^3.0.0",
+    "eslint-config-airbnb-base": "^3.0.1",
+    "eslint-plugin-import": "^1.10.2",
+    "proxyquire": "^1.7.10"
+  },
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.5.3"
+  }
+}
