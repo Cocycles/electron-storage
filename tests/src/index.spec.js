@@ -1,5 +1,3 @@
-/* eslint func-names: 0 */
-/* eslint prefer-arrow-callback: 0 */
 /* eslint consistent-return: 0 */
 
 const chai = require('chai');
@@ -8,25 +6,25 @@ const rimraf = require('rimraf');
 const proxyquire = require('proxyquire');
 const fakeAppDataDir = `${process.cwd()}/fake-appData`;
 const mockGetElectronFullPath = (path) => `fake-appData/${path}`;
-const storage = proxyquire('../../src/index', {
+const storage = proxyquire('../../dist/index', {
   './utils': { getElectronFullPath: mockGetElectronFullPath },
 });
 
-describe('Electron Storage', function () {
-  beforeEach('create the fake-appData folder', function () {
+describe('Electron Storage', () => {
+  beforeEach('create the fake-appData folder', () => {
     fs.mkdirSync(fakeAppDataDir);
   });
 
-  afterEach('delete the fake-appData folder', function () {
+  afterEach('delete the fake-appData folder', () => {
     rimraf.sync(fakeAppDataDir);
   });
 
-  describe('storage.get()', function () {
-    it('receives the data from a json file', function (done) {
+  describe('storage.get()', () => {
+    it('receives the data from a json file', (done) => {
       const json = JSON.stringify({ awesome: 'data' });
       fs.writeFile(`${fakeAppDataDir}/my-awesome-data.json`, json, (err) => {
         if (err) {
-          return console.error(err);
+          throw err;
         }
 
         storage.get('my-awesome-data.json', (error, data) => {
@@ -38,8 +36,24 @@ describe('Electron Storage', function () {
     });
   });
 
-  describe('storage.set()', function () {
-    it('sets a json file that you can later get', function (done) {
+  describe('storage.get()', () => {
+    it('receives the data from a json file', (done) => {
+      const json = JSON.stringify({ awesome: 'data' });
+      fs.writeFile(`${fakeAppDataDir}/my-awesome-data.json`, json, (err) => {
+        if (err) {
+          throw err;
+        }
+
+        storage.get('my-awesome-data.json').then(data => {
+          chai.expect(data).to.deep.equal({ awesome: 'data' });
+          done();
+        });
+      });
+    });
+  });
+
+  describe('storage.set()', () => {
+    it('sets a json file that you can later get', (done) => {
       storage.set('data.json', { js: 'on' }, (err) => {
         chai.expect(err).to.equal(null);
         storage.get('data.json', (error, data) => {
@@ -49,7 +63,7 @@ describe('Electron Storage', function () {
       });
     });
 
-    it('creates folders if needed', function (done) {
+    it('creates folders if needed', (done) => {
       storage.set('in/some/folders/data.json', { js: 'on' }, (err) => {
         chai.expect(err).to.equal(null);
         storage.get('in/some/folders/data.json', (error, data) => {
@@ -60,8 +74,8 @@ describe('Electron Storage', function () {
     });
   });
 
-  describe('storage.isPathExists()', function () {
-    it('return true if the path exists', function (done) {
+  describe('storage.isPathExists()', () => {
+    it('return true if the path exists', (done) => {
       storage.set('in/some/folders/data.json', { js: 'on' }, (err) => {
         chai.expect(err).to.equal(null);
         storage.isPathExists('in/some/folders/data.json', (data) => {
@@ -70,7 +84,8 @@ describe('Electron Storage', function () {
         });
       });
     });
-    it('return false if the path doesn\'t exists', function (done) {
+
+    it('return false if the path doesn\'t exists', (done) => {
       storage.set('in/some/folders/data.json', { js: 'on' }, (err) => {
         chai.expect(err).to.equal(null);
         storage.isPathExists('in/some/other/folders/data.json', (data) => {

@@ -78,6 +78,9 @@ storage.isPathExists(path)
   }
 });
 ```
+## Development
+``` npm run build ```
+for creating es5 files in dist folder
 
 ## License
 The MIT License (MIT)

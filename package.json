@@ -2,10 +2,11 @@
   "name": "electron-storage",
   "version": "1.0.0",
   "description": "module for managing storage in electron applications",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "electron-mocha --recursive tests -R spec && electron-mocha --renderer --recursive tests -R spec",
-    "lint": "eslint ./src/**/*.js; exit 0"
+    "test": "gulp; electron-mocha --recursive tests -R spec && electron-mocha --renderer --recursive tests -R spec",
+    "lint": "eslint ./src/**/*.js; exit 0",
+    "build": "gulp"
   },
   "homepage": "https://github.com/ran-y/electron-storage",
   "repository": {
@@ -23,12 +24,15 @@
   "author": "Ran yitzhaki",
   "license": "MIT",
   "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
     "chai": "^3.5.0",
     "electron-mocha": "^2.2.1",
     "electron-prebuilt": "^1.2.5",
     "eslint": "^3.0.0",
     "eslint-config-airbnb-base": "^3.0.1",
     "eslint-plugin-import": "^1.10.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
     "proxyquire": "^1.7.10"
   },
   "dependencies": {

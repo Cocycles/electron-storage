@@ -1,14 +1,20 @@
-/* eslint no-underscore-dangle: 0 */
+'use strict';
 
-import fs from 'fs';
-import mkdirp from 'mkdirp';
-import path from 'path';
-import {
-  isFunction,
-  tryParseJson,
-  tryStringifyJson,
-  getElectronFullPath,
-} from './utils';
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _mkdirp = require('mkdirp');
+
+var _mkdirp2 = _interopRequireDefault(_mkdirp);
+
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
+var _utils = require('./utils');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * _get - function the gets filePath and a callback and returns a parse json
@@ -17,21 +23,23 @@ import {
  * @param  {string} filePath - path to the file relative to the `userData` folder
  * @param  {function} cb - a callback function
  */
+/* eslint no-underscore-dangle: 0 */
+
 function _get(filePath, cb) {
-  const fullPath = getElectronFullPath(filePath);
-  return fs.readFile(fullPath, { encoding: 'utf8' }, (err, json) => {
+  var fullPath = (0, _utils.getElectronFullPath)(filePath);
+  return _fs2.default.readFile(fullPath, { encoding: 'utf8' }, function (err, json) {
     if (!err) {
-      const object = tryParseJson(json);
+      var object = (0, _utils.tryParseJson)(json);
 
       if (object instanceof Error) {
-        return cb(new Error(`The file in path ${fullPath} is not a valid json file`), null);
+        return cb(new Error('The file in path ' + fullPath + ' is not a valid json file'), null);
       }
 
       return cb(null, object);
     }
 
     if (err.code === 'ENOENT') {
-      return cb(new Error(`The file in path ${fullPath} doesn\'t exist`), null);
+      return cb(new Error('The file in path ' + fullPath + ' doesn\'t exist'), null);
     }
 
     return cb(err);
@@ -48,19 +56,19 @@ function _get(filePath, cb) {
  *                               will return a thenable Promise object
  */
 function get(filePath, cb) {
-  if (cb && isFunction(cb)) {
+  if (cb && (0, _utils.isFunction)(cb)) {
     return _get(filePath, cb);
   }
 
-  return new Promise((resolve, reject) =>
-    _get(filePath, (err, data) => {
+  return new Promise(function (resolve, reject) {
+    return _get(filePath, function (err, data) {
       if (err) {
         return reject(err);
       }
 
       return resolve(data);
-    })
-  );
+    });
+  });
 }
 
 /**
@@ -72,20 +80,20 @@ function get(filePath, cb) {
  * @param  {type} cb - a callback function
  */
 function _set(filePath, data, cb) {
-  const fullPath = getElectronFullPath(filePath);
-  const json = tryStringifyJson(data);
+  var fullPath = (0, _utils.getElectronFullPath)(filePath);
+  var json = (0, _utils.tryStringifyJson)(data);
 
   if (json instanceof Error) {
-    return cb(new Error(`The file you trying to save at path ${fullPath} is not valid json`));
+    return cb(new Error('The file you trying to save at path ' + fullPath + ' is not valid json'));
   }
 
-  const dir = path.dirname(fullPath);
+  var dir = _path2.default.dirname(fullPath);
 
-  return fs.access(dir, fs.F_OK, (notExists) => {
-    if (!notExists) return fs.writeFile(fullPath, json, cb);
-    return mkdirp(dir, (err) => {
+  return _fs2.default.access(dir, _fs2.default.F_OK, function (notExists) {
+    if (!notExists) return _fs2.default.writeFile(fullPath, json, cb);
+    return (0, _mkdirp2.default)(dir, function (err) {
       if (err) return cb(err);
-      return fs.writeFile(fullPath, json, cb);
+      return _fs2.default.writeFile(fullPath, json, cb);
     });
   });
 }
@@ -102,19 +110,19 @@ function _set(filePath, data, cb) {
  */
 
 function set(filePath, data, cb) {
-  if (cb && isFunction(cb)) {
+  if (cb && (0, _utils.isFunction)(cb)) {
     return _set(filePath, data, cb);
   }
 
-  return new Promise((resolve, reject) =>
-    _set(filePath, data, (err) => {
+  return new Promise(function (resolve, reject) {
+    return _set(filePath, data, function (err) {
       if (err) {
         return reject(err);
       }
 
       return resolve();
-    })
-  );
+    });
+  });
 }
 
 /**
@@ -124,9 +132,9 @@ function set(filePath, data, cb) {
  * @param  {func} cb - a callback function
  */
 function _isPathExists(fileOrDirPath, cb) {
-  const fullPath = getElectronFullPath(fileOrDirPath);
+  var fullPath = (0, _utils.getElectronFullPath)(fileOrDirPath);
 
-  return fs.exists(fullPath, (exists) => {
+  return _fs2.default.exists(fullPath, function (exists) {
     if (exists) {
       return cb(true);
     }
@@ -144,19 +152,19 @@ function _isPathExists(fileOrDirPath, cb) {
  *                               will return a thenable Promise object
  */
 function isPathExists(fileOrDirPath, cb) {
-  if (cb && isFunction(cb)) {
+  if (cb && (0, _utils.isFunction)(cb)) {
     return _isPathExists(fileOrDirPath, cb);
   }
 
-  return new Promise((resolve) =>
-    _isPathExists(fileOrDirPath, (result) =>
-      resolve(result)
-    )
-  );
+  return new Promise(function (resolve) {
+    return _isPathExists(fileOrDirPath, function (result) {
+      return resolve(result);
+    });
+  });
 }
 
 module.exports = {
-  get,
-  set,
-  isPathExists,
+  get: get,
+  set: set,
+  isPathExists: isPathExists
 };
