@@ -3,6 +3,7 @@
 import fs from 'fs';
 import mkdirp from 'mkdirp';
 import path from 'path';
+import rimraf from 'rimraf';
 import {
   isFunction,
   tryParseJson,
@@ -54,10 +55,7 @@ function get(filePath, cb) {
 
   return new Promise((resolve, reject) =>
     _get(filePath, (err, data) => {
-      if (err) {
-        return reject(err);
-      }
-
+      if (err) return reject(err);
       return resolve(data);
     })
   );
@@ -108,10 +106,7 @@ function set(filePath, data, cb) {
 
   return new Promise((resolve, reject) =>
     _set(filePath, data, (err) => {
-      if (err) {
-        return reject(err);
-      }
-
+      if (err) return reject(err);
       return resolve();
     })
   );
@@ -127,10 +122,7 @@ function _isPathExists(fileOrDirPath, cb) {
   const fullPath = getElectronFullPath(fileOrDirPath);
 
   return fs.exists(fullPath, (exists) => {
-    if (exists) {
-      return cb(true);
-    }
-
+    if (exists) return cb(true);
     return cb(false);
   });
 }
@@ -148,10 +140,43 @@ function isPathExists(fileOrDirPath, cb) {
     return _isPathExists(fileOrDirPath, cb);
   }
 
-  return new Promise((resolve) =>
+  return new Promise(resolve =>
     _isPathExists(fileOrDirPath, (result) =>
       resolve(result)
     )
+  );
+}
+
+/**
+ * _remove - remove the file/folder from the path inserted
+ *
+ * @param  {string} fileOrDirPath - a path inside of the userData directory
+ * @param  {func} cb - a callback function
+ */
+function _remove(fileOrDirPath, cb) {
+  const fullPath = getElectronFullPath(fileOrDirPath);
+
+  return rimraf(fullPath, cb);
+}
+
+/**
+ * remove - remove the file/folder from the path inserted
+ *
+ * @param  {string} fileOrDirPath - a path inside of the userData directory
+ * @param  {undefined|func} cb - an optional callback function
+ * @return {undefined | Promise} if there are only two first arguments, the function
+ *                               will return a thenable Promise object
+ */
+function remove(fileOrDirPath, cb) {
+  if (cb && isFunction(cb)) {
+    return _remove(fileOrDirPath, cb);
+  }
+
+  return new Promise((resolve, reject) =>
+    _remove(fileOrDirPath, error => {
+      if (error) return reject(error);
+      return resolve();
+    })
   );
 }
 
@@ -159,4 +184,5 @@ module.exports = {
   get,
   set,
   isPathExists,
+  remove,
 };

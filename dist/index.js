@@ -12,6 +12,10 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _rimraf = require('rimraf');
+
+var _rimraf2 = _interopRequireDefault(_rimraf);
+
 var _utils = require('./utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -23,8 +27,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param  {string} filePath - path to the file relative to the `userData` folder
  * @param  {function} cb - a callback function
  */
-/* eslint no-underscore-dangle: 0 */
-
 function _get(filePath, cb) {
   var fullPath = (0, _utils.getElectronFullPath)(filePath);
   return _fs2.default.readFile(fullPath, { encoding: 'utf8' }, function (err, json) {
@@ -55,6 +57,8 @@ function _get(filePath, cb) {
  * @return {undefined | Promise} if there is only the first argument, the function
  *                               will return a thenable Promise object
  */
+/* eslint no-underscore-dangle: 0 */
+
 function get(filePath, cb) {
   if (cb && (0, _utils.isFunction)(cb)) {
     return _get(filePath, cb);
@@ -62,10 +66,7 @@ function get(filePath, cb) {
 
   return new Promise(function (resolve, reject) {
     return _get(filePath, function (err, data) {
-      if (err) {
-        return reject(err);
-      }
-
+      if (err) return reject(err);
       return resolve(data);
     });
   });
@@ -116,10 +117,7 @@ function set(filePath, data, cb) {
 
   return new Promise(function (resolve, reject) {
     return _set(filePath, data, function (err) {
-      if (err) {
-        return reject(err);
-      }
-
+      if (err) return reject(err);
       return resolve();
     });
   });
@@ -135,10 +133,7 @@ function _isPathExists(fileOrDirPath, cb) {
   var fullPath = (0, _utils.getElectronFullPath)(fileOrDirPath);
 
   return _fs2.default.exists(fullPath, function (exists) {
-    if (exists) {
-      return cb(true);
-    }
-
+    if (exists) return cb(true);
     return cb(false);
   });
 }
@@ -163,8 +158,42 @@ function isPathExists(fileOrDirPath, cb) {
   });
 }
 
+/**
+ * _remove - remove the file/folder from the path inserted
+ *
+ * @param  {string} fileOrDirPath - a path inside of the userData directory
+ * @param  {func} cb - a callback function
+ */
+function _remove(fileOrDirPath, cb) {
+  var fullPath = (0, _utils.getElectronFullPath)(fileOrDirPath);
+
+  return (0, _rimraf2.default)(fullPath, cb);
+}
+
+/**
+ * remove - remove the file/folder from the path inserted
+ *
+ * @param  {string} fileOrDirPath - a path inside of the userData directory
+ * @param  {undefined|func} cb - an optional callback function
+ * @return {undefined | Promise} if there are only two first arguments, the function
+ *                               will return a thenable Promise object
+ */
+function remove(fileOrDirPath, cb) {
+  if (cb && (0, _utils.isFunction)(cb)) {
+    return _remove(fileOrDirPath, cb);
+  }
+
+  return new Promise(function (resolve, reject) {
+    return _remove(fileOrDirPath, function (error) {
+      if (error) return reject(error);
+      return resolve();
+    });
+  });
+}
+
 module.exports = {
   get: get,
   set: set,
-  isPathExists: isPathExists
+  isPathExists: isPathExists,
+  remove: remove
 };

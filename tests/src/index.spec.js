@@ -95,4 +95,34 @@ describe('Electron Storage', () => {
       });
     });
   });
+
+  describe('storage.remove() - file', () => {
+    it('removes the file in path', (done) => {
+      storage.set('in/some/folders/data.json', { js: 'on' }, (err) => {
+        chai.expect(err).to.equal(null);
+        storage.remove('in/some/folders/data.json', error => {
+          storage.isPathExists('in/some/other/folders/data.json', (data) => {
+            chai.expect(data).to.equal(false);
+            chai.expect(error).to.equal(null);
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  describe('storage.remove() - folder', () => {
+    it('removes the folder in path', (done) => {
+      storage.set('in/some/folders/data.json', { js: 'on' }, (err) => {
+        chai.expect(err).to.equal(null);
+        storage.remove('in/some/folders', error => {
+          storage.isPathExists('in/some/folders', (data) => {
+            chai.expect(data).to.equal(false);
+            chai.expect(error).to.equal(null);
+            done();
+          });
+        });
+      });
+    });
+  });
 });

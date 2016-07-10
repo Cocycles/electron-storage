@@ -78,6 +78,26 @@ storage.isPathExists(path)
   }
 });
 ```
+
+#### storage.remove(path, cb)
+```js
+storage.remove(path, err => {
+  if (err) {
+    console.log(err)
+  }
+});
+```
+
+#### storage.remove(path)
+```js
+storage.remove(path)
+.then(err => {
+  if (err) {
+    console.log(err)
+  }
+});
+```
+
 ## Development
 ``` npm run build ```
 for creating es5 files in dist folder
