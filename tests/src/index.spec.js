@@ -7,7 +7,7 @@ const proxyquire = require('proxyquire');
 const fakeAppDataDir = `${process.cwd()}/fake-appData`;
 const mockGetElectronFullPath = (path) => `fake-appData/${path}`;
 const storage = proxyquire('../../dist/index', {
-  './utils': { getElectronFullPath: mockGetElectronFullPath },
+  './utils': { processPath: mockGetElectronFullPath },
 });
 
 describe('Electron Storage', () => {

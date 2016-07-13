@@ -41,9 +41,21 @@ function getElectronFullPath(path) {
   return `${userData}/${path}`;
 }
 
+function addDotJsonIfNeeded(path) {
+  if (path.substring(path.length - 5, path.length) === '.json') {
+    return path;
+  }
+
+  return `${path}.json`;
+}
+
+function processPath(path) {
+  return getElectronFullPath(addDotJsonIfNeeded(path));
+}
+
 module.exports = {
-  isFunction: isFunction,
-  tryParseJson: tryParseJson,
-  tryStringifyJson: tryStringifyJson,
-  getElectronFullPath: getElectronFullPath,
+  isFunction,
+  tryParseJson,
+  tryStringifyJson,
+  processPath,
 };

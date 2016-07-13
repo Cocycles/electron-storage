@@ -8,7 +8,7 @@ import {
   isFunction,
   tryParseJson,
   tryStringifyJson,
-  getElectronFullPath,
+  processPath,
 } from './utils';
 
 /**
@@ -19,7 +19,7 @@ import {
  * @param  {function} cb - a callback function
  */
 function _get(filePath, cb) {
-  const fullPath = getElectronFullPath(filePath);
+  const fullPath = processPath(filePath);
   return fs.readFile(fullPath, { encoding: 'utf8' }, (err, json) => {
     if (!err) {
       const object = tryParseJson(json);
@@ -70,7 +70,7 @@ function get(filePath, cb) {
  * @param  {type} cb - a callback function
  */
 function _set(filePath, data, cb) {
-  const fullPath = getElectronFullPath(filePath);
+  const fullPath = processPath(filePath);
   const json = tryStringifyJson(data);
 
   if (json instanceof Error) {
@@ -119,7 +119,7 @@ function set(filePath, data, cb) {
  * @param  {func} cb - a callback function
  */
 function _isPathExists(fileOrDirPath, cb) {
-  const fullPath = getElectronFullPath(fileOrDirPath);
+  const fullPath = processPath(fileOrDirPath);
 
   return fs.exists(fullPath, (exists) => {
     if (exists) return cb(true);
@@ -154,7 +154,7 @@ function isPathExists(fileOrDirPath, cb) {
  * @param  {func} cb - a callback function
  */
 function _remove(fileOrDirPath, cb) {
-  const fullPath = getElectronFullPath(fileOrDirPath);
+  const fullPath = processPath(fileOrDirPath);
 
   return rimraf(fullPath, cb);
 }

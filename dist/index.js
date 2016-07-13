@@ -28,7 +28,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param  {function} cb - a callback function
  */
 function _get(filePath, cb) {
-  var fullPath = (0, _utils.getElectronFullPath)(filePath);
+  var fullPath = (0, _utils.processPath)(filePath);
   return _fs2.default.readFile(fullPath, { encoding: 'utf8' }, function (err, json) {
     if (!err) {
       var object = (0, _utils.tryParseJson)(json);
@@ -81,7 +81,7 @@ function get(filePath, cb) {
  * @param  {type} cb - a callback function
  */
 function _set(filePath, data, cb) {
-  var fullPath = (0, _utils.getElectronFullPath)(filePath);
+  var fullPath = (0, _utils.processPath)(filePath);
   var json = (0, _utils.tryStringifyJson)(data);
 
   if (json instanceof Error) {
@@ -130,7 +130,7 @@ function set(filePath, data, cb) {
  * @param  {func} cb - a callback function
  */
 function _isPathExists(fileOrDirPath, cb) {
-  var fullPath = (0, _utils.getElectronFullPath)(fileOrDirPath);
+  var fullPath = (0, _utils.processPath)(fileOrDirPath);
 
   return _fs2.default.exists(fullPath, function (exists) {
     if (exists) return cb(true);
@@ -165,7 +165,7 @@ function isPathExists(fileOrDirPath, cb) {
  * @param  {func} cb - a callback function
  */
 function _remove(fileOrDirPath, cb) {
-  var fullPath = (0, _utils.getElectronFullPath)(fileOrDirPath);
+  var fullPath = (0, _utils.processPath)(fileOrDirPath);
 
   return (0, _rimraf2.default)(fullPath, cb);
 }
