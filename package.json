@@ -1,6 +1,6 @@
 {
   "name": "electron-storage",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "module for managing storage in electron applications",
   "main": "dist/index.js",
   "scripts": {
