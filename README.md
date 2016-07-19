@@ -1,6 +1,6 @@
 # electron-storage
 
-> simple electron-storage module
+> simple storage managing module for electron
 
 Electron saves data in app.getPath("appData") folder, which is different in every os.
 ```electron-storage``` gives simple methods to get and set json files to this directory.
@@ -105,6 +105,9 @@ storage.remove(path)
 ## Development
 ``` npm run build ```
 for creating es5 files in dist folder
+
+## Contribute
+Contributions are welcome! please open issues and pull request :)
 
 ## License
 The MIT License (MIT)
