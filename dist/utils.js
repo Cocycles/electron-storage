@@ -55,9 +55,14 @@ function processPath(path) {
   return getElectronFullPath(addDotJsonIfNeeded(path));
 }
 
+function processPathNoJson(path) {
+  return getElectronFullPath(path);
+}
+
 module.exports = {
   isFunction: isFunction,
   tryParseJson: tryParseJson,
   tryStringifyJson: tryStringifyJson,
-  processPath: processPath
+  processPath: processPath,
+  processPathNoJson: processPathNoJson
 };

@@ -130,7 +130,7 @@ function set(filePath, data, cb) {
  * @param  {func} cb - a callback function
  */
 function _isPathExists(fileOrDirPath, cb) {
-  var fullPath = (0, _utils.processPath)(fileOrDirPath);
+  var fullPath = (0, _utils.processPathNoJson)(fileOrDirPath);
 
   return _fs2.default.exists(fullPath, function (exists) {
     if (exists) return cb(true);
@@ -165,7 +165,7 @@ function isPathExists(fileOrDirPath, cb) {
  * @param  {func} cb - a callback function
  */
 function _remove(fileOrDirPath, cb) {
-  var fullPath = (0, _utils.processPath)(fileOrDirPath);
+  var fullPath = (0, _utils.processPathNoJson)(fileOrDirPath);
 
   return (0, _rimraf2.default)(fullPath, cb);
 }

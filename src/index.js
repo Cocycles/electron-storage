@@ -9,6 +9,7 @@ import {
   tryParseJson,
   tryStringifyJson,
   processPath,
+  processPathNoJson,
 } from './utils';
 
 /**
@@ -119,7 +120,7 @@ function set(filePath, data, cb) {
  * @param  {func} cb - a callback function
  */
 function _isPathExists(fileOrDirPath, cb) {
-  const fullPath = processPath(fileOrDirPath);
+  const fullPath = processPathNoJson(fileOrDirPath);
 
   return fs.exists(fullPath, (exists) => {
     if (exists) return cb(true);
@@ -154,7 +155,7 @@ function isPathExists(fileOrDirPath, cb) {
  * @param  {func} cb - a callback function
  */
 function _remove(fileOrDirPath, cb) {
-  const fullPath = processPath(fileOrDirPath);
+  const fullPath = processPathNoJson(fileOrDirPath);
 
   return rimraf(fullPath, cb);
 }
