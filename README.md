@@ -2,7 +2,7 @@
 
 > simple storage managing module for electron
 
-Electron saves data in app.getPath("appData") folder, which is different in every os.
+Electron saves data in app.getPath("userData") folder, which is different in every os.
 ```electron-storage``` gives simple methods to get and set json files to this directory.
 
 * Creates subdirectories if needed - that means you can write ```movies/StarWars.json``` as path, a movies folder will be created and a StarWars.json file inside.
