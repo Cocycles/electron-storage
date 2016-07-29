@@ -7,6 +7,7 @@
 var electron = require('electron');
 var app = electron.app || electron.remote.app;
 var userData = app.getPath('userData');
+var path = require('path');
 
 function isFunction(functionToCheck) {
   var getType = {};
@@ -39,24 +40,24 @@ function tryStringifyJson(objectJson) {
   return string;
 }
 
-function getElectronFullPath(path) {
-  return userData + '/' + path;
+function getElectronFullPath(filePath) {
+  return path.join(userData, filePath);
 }
 
-function addDotJsonIfNeeded(path) {
-  if (path.substring(path.length - 5, path.length) === '.json') {
-    return path;
+function addDotJsonIfNeeded(filePath) {
+  if (filePath.substring(filePath.length - 5, filePath.length) === '.json') {
+    return filePath;
   }
 
-  return path + '.json';
+  return filePath + '.json';
 }
 
-function processPath(path) {
-  return getElectronFullPath(addDotJsonIfNeeded(path));
+function processPath(filePath) {
+  return addDotJsonIfNeeded(getElectronFullPath(filePath));
 }
 
-function processPathNoJson(path) {
-  return getElectronFullPath(path);
+function processPathNoJson(filePath) {
+  return getElectronFullPath(filePath);
 }
 
 module.exports = {

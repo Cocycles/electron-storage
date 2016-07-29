@@ -4,7 +4,7 @@
   "description": "module for managing storage in electron applications",
   "main": "dist/index.js",
   "scripts": {
-    "test": "gulp; electron-mocha --recursive tests -R spec && electron-mocha --renderer --recursive tests -R spec",
+    "test": "electron-mocha --recursive tests -R spec && electron-mocha --renderer --recursive tests -R spec",
     "lint": "eslint ./src/**/*.js; exit 0",
     "build": "gulp"
   },

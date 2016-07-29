@@ -3,9 +3,10 @@
 const chai = require('chai');
 const fs = require('fs');
 const rimraf = require('rimraf');
+const path = require('path');
 const proxyquire = require('proxyquire');
-const fakeAppDataDir = `${process.cwd()}/fake-appData`;
-const mockGetElectronFullPath = (path) => `fake-appData/${path}`;
+const fakeAppDataDir = path.join(process.cwd(), 'fake-appData');
+const mockGetElectronFullPath = (filePath) => path.join('fake-appData', filePath);
 const storage = proxyquire('../../dist/index', {
   './utils': {
     processPath: mockGetElectronFullPath,
@@ -25,7 +26,7 @@ describe('Electron Storage', () => {
   describe('storage.get()', () => {
     it('receives the data from a json file', (done) => {
       const json = JSON.stringify({ awesome: 'data' });
-      fs.writeFile(`${fakeAppDataDir}/my-awesome-data.json`, json, (err) => {
+      fs.writeFile(path.join(fakeAppDataDir, 'my-awesome-data.json'), json, (err) => {
         if (err) {
           throw err;
         }
@@ -42,7 +43,7 @@ describe('Electron Storage', () => {
   describe('storage.get()', () => {
     it('receives the data from a json file', (done) => {
       const json = JSON.stringify({ awesome: 'data' });
-      fs.writeFile(`${fakeAppDataDir}/my-awesome-data.json`, json, (err) => {
+      fs.writeFile(path.join(fakeAppDataDir, 'my-awesome-data.json'), json, (err) => {
         if (err) {
           throw err;
         }
@@ -67,9 +68,9 @@ describe('Electron Storage', () => {
     });
 
     it('creates folders if needed', (done) => {
-      storage.set('in/some/folders/data.json', { js: 'on' }, (err) => {
+      storage.set(path.join('in', 'some', 'folders', 'data.json'), { js: 'on' }, (err) => {
         chai.expect(err).to.equal(null);
-        storage.get('in/some/folders/data.json', (error, data) => {
+        storage.get(path.join('in', 'some', 'folders', 'data.json'), (error, data) => {
           chai.expect(data).to.deep.equal({ js: 'on' });
           done();
         });
@@ -79,9 +80,9 @@ describe('Electron Storage', () => {
 
   describe('storage.isPathExists()', () => {
     it('return true if the path exists', (done) => {
-      storage.set('in/some/folders/data.json', { js: 'on' }, (err) => {
+      storage.set(path.join('in', 'some', 'folders', 'data.json'), { js: 'on' }, (err) => {
         chai.expect(err).to.equal(null);
-        storage.isPathExists('in/some/folders/data.json', (data) => {
+        storage.isPathExists(path.join('in', 'some', 'folders', 'data.json'), (data) => {
           chai.expect(data).to.equal(true);
           done();
         });
@@ -89,9 +90,9 @@ describe('Electron Storage', () => {
     });
 
     it('return false if the path doesn\'t exists', (done) => {
-      storage.set('in/some/folders/data.json', { js: 'on' }, (err) => {
+      storage.set(path.join('in', 'some', 'folders', 'data.json'), { js: 'on' }, (err) => {
         chai.expect(err).to.equal(null);
-        storage.isPathExists('in/some/other/folders/data.json', (data) => {
+        storage.isPathExists(path.join('in', 'some', 'other', 'folders', 'data.json'), (data) => {
           chai.expect(data).to.equal(false);
           done();
         });
@@ -101,10 +102,10 @@ describe('Electron Storage', () => {
 
   describe('storage.remove() - file', () => {
     it('removes the file in path', (done) => {
-      storage.set('in/some/folders/data.json', { js: 'on' }, (err) => {
+      storage.set(path.join('in', 'some', 'folders', 'data.json'), { js: 'on' }, (err) => {
         chai.expect(err).to.equal(null);
-        storage.remove('in/some/folders/data.json', error => {
-          storage.isPathExists('in/some/other/folders/data.json', (data) => {
+        storage.remove(path.join('in', 'some', 'folders', 'data.json'), error => {
+          storage.isPathExists(path.join('in', 'some', 'other', 'folders', 'data.json'), (data) => {
             chai.expect(data).to.equal(false);
             chai.expect(error).to.equal(null);
             done();
@@ -116,10 +117,10 @@ describe('Electron Storage', () => {
 
   describe('storage.remove() - folder', () => {
     it('removes the folder in path', (done) => {
-      storage.set('in/some/folders/data.json', { js: 'on' }, (err) => {
+      storage.set(path.join('in', 'some', 'folders', 'data.json'), { js: 'on' }, (err) => {
         chai.expect(err).to.equal(null);
-        storage.remove('in/some/folders', error => {
-          storage.isPathExists('in/some/folders', (data) => {
+        storage.remove(path.join('in', 'some', 'folders'), error => {
+          storage.isPathExists(path.join('in', 'some', 'folders'), (data) => {
             chai.expect(data).to.equal(false);
             chai.expect(error).to.equal(null);
             done();
