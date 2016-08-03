@@ -41,7 +41,7 @@ function _get(filePath, cb) {
     }
 
     if (err.code === 'ENOENT') {
-      err.message = 'The file in path ' + fullPath + ' doesn\'t exist';
+      err.message = 'The file in path ' + fullPath + ' doesn\'t exist'; /* eslint no-param-reassign: 0 */
     }
 
     return cb(err);
