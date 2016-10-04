@@ -18,7 +18,7 @@ Electron saves data in app.getPath("userData") folder, which is different in eve
 [![issues](https://img.shields.io/github/issues/Cocycles/electron-storage.svg)](https://github.com/Cocycles/electron-storage)
 [![forks](https://img.shields.io/github/forks/Cocycles/electron-storage.svg)](https://github.com/Cocycles/electron-storage)
 [![stars](https://img.shields.io/github/stars/Cocycles/electron-storage.svg)](https://github.com/Cocycles/electron-storage)
-[![https://twitter.com/intent/tweet?text=https://github.com/Cocycles/electron-storage&url=%5Bobject%20Object%5D](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000)]()
+[![twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000)](https://twitter.com/intent/tweet?text=https://github.com/Cocycles/electron-storage&url=%5Bobject%20Object%5D)
 
 ## Installation
 
