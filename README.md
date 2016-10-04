@@ -10,6 +10,16 @@ Electron saves data in app.getPath("userData") folder, which is different in eve
 * The data inserted can be a javascript object, or stringified json.
 * You don't have to write ```.json``` in the end of a file path, it will add it for you.
 
+[![NPM](https://nodei.co/npm/electron-storage.png?downloads=true&downloadRank=true)](https://nodei.co/npm/electron-storage/)
+[![Package Quality](http://npm.packagequality.com/badge/electron-storage.png)](http://packagequality.com/#?package=electron- storage)
+
+[![npm version](https://badge.fury.io/js/electron-storage.svg)](https://badge.fury.io/js/electron-storage)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Cocycles/electron-storage)
+[![issues](https://img.shields.io/github/issues/Cocycles/electron-storage.svg)](https://github.com/Cocycles/electron-storage)
+[![forks](https://img.shields.io/github/forks/Cocycles/electron-storage.svg)](https://github.com/Cocycles/electron-storage)
+[![stars](https://img.shields.io/github/stars/Cocycles/electron-storage.svg)](https://github.com/Cocycles/electron-storage)
+[![https://twitter.com/intent/tweet?text=https://github.com/Cocycles/electron-storage&url=%5Bobject%20Object%5D](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000)]()
+
 ## Installation
 
 ```
