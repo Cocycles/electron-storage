@@ -25,12 +25,15 @@ Electron saves data in app.getPath("userData") folder, which is different in eve
 ```
 $ npm install --save electron-storage
 ```
-### usage
+## usage
 ```js
 
 const storage = require('electron-storage');
 ```
-### API
+## API
+
+### get
+get a json file from storage.
 
 #### storage.get(filePath, cb)
 ```js
@@ -54,6 +57,9 @@ storage.get(filePath)
 });
 ```
 
+### set
+set a json file to storage.
+
 #### storage.set(filePath, data, cb)
 ```js
 storage.set(filePath, data, (err) => {
@@ -74,6 +80,14 @@ storage.set(filePath, data)
 });
 ```
 
+### isPathExists
+check if a file or directory exists.
+
+```js
+// you have to write .json suffix for json files.
+// this method works on directories as well, if you don't write `.json` suffix it checks for a directory.
+```
+
 #### storage.isPathExists(path, cb)
 ```js
 storage.isPathExists(path, (itDoes) => {
@@ -92,6 +106,9 @@ storage.isPathExists(path)
   }
 });
 ```
+
+### remove
+remove a file or a directory from storage
 
 #### storage.remove(path, cb)
 ```js
