@@ -72,8 +72,8 @@ storage.set(filePath, data, (err) => {
 #### storage.set(filePath, data)
 ```js
 storage.set(filePath, data)
-.then(data => {
-  console.log(data);
+.then(() => {
+  console.log('The file was successfully written to the storage');
 })
 .catch(err => {
   console.error(err);
