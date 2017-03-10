@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
+### Changed
+refactored to use ya-storage module
+
 ## [1.0.7]
 ### Added
 - CHANGELOG.md
