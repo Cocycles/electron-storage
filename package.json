@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "mkdirp": "^0.5.1",
-    "rimraf": "^2.5.3"
+    "rimraf": "^2.5.3",
+    "ya-storage": "^1.0.3"
   }
 }
