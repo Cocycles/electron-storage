@@ -9,37 +9,6 @@ var app = electron.app || electron.remote.app;
 var userData = app.getPath('userData');
 var path = require('path');
 
-function isFunction(functionToCheck) {
-  var getType = {};
-  return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-}
-
-function tryParseJson(stringJson) {
-  var object = void 0;
-  try {
-    object = JSON.parse(stringJson);
-  } catch (e) {
-    return e;
-  }
-
-  return object;
-}
-
-function tryStringifyJson(objectJson) {
-  if (typeof objectJson === 'string') {
-    return objectJson;
-  }
-
-  var string = void 0;
-  try {
-    string = JSON.stringify(objectJson);
-  } catch (e) {
-    return e;
-  }
-
-  return string;
-}
-
 function getElectronFullPath(filePath) {
   return path.join(userData, filePath);
 }
@@ -61,9 +30,6 @@ function processPathNoJson(filePath) {
 }
 
 module.exports = {
-  isFunction: isFunction,
-  tryParseJson: tryParseJson,
-  tryStringifyJson: tryStringifyJson,
   processPath: processPath,
   processPathNoJson: processPathNoJson
 };
