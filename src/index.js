@@ -6,7 +6,6 @@ import {
 } from './utils';
 import ya from 'ya-storage';
 
-
 /**
  * get - function the gets filePath and a callback and returns a parse json
  *       from the file in the specefied path
